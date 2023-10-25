@@ -40,9 +40,24 @@ public class MathGameUI {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("GAME OVER!");
             if (game.getWinner() != null) {  // check for null just to be safe (so we don't call a method on null)
-                System.out.println("The winner was " + game.getWinner().getName());   // print winner's name
-                System.out.println("with a score of " + game.getWinner().getScore()); // print winner's score
-                System.out.println(game.getWinner().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                if (game.getWinner2() == null) {
+                    System.out.println("The winner was " + game.getWinner().getName());   // print winner's name
+                    System.out.println("with a score of " + game.getWinner().getScore()); // print winner's score
+                    System.out.println(game.getWinner().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                } else if (game.getWinner3() != null) {
+                    System.out.println("The winners were " + game.getWinner().getName() + ", " + game.getWinner2().getName() + ", and " + game.getWinner3().getName());   // print winner's name
+                    System.out.println("With the scores of " + game.getWinner().getScore()); // print winner's score
+                    System.out.println(game.getWinner().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                    System.out.println(game.getWinner2().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                    System.out.println(game.getWinner3().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                } else {
+                    System.out.println("The winners were " + game.getWinner().getName() + " and " + game.getWinner2().getName());   // print winner's name
+                    System.out.println("With the scores of " + game.getWinner().getScore()); // print winner's score
+                    System.out.println(game.getWinner().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                    System.out.println(game.getWinner2().getName() + " has won " + game.getWinner().getStreak() + " games in a row");
+                }
+            } else {
+                System.out.println("NO WINNERS, ALL HAVE A SCORE OF 0");
             }
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.print("Want to play another round? y/n: ");

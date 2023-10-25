@@ -7,6 +7,8 @@ public class MathGame {
     private Player player3;
     private Player currentPlayer;
     private Player winner;
+    private Player winner2;
+    private Player winner3;
     private boolean gameOver;
     private Scanner scanner;
 
@@ -18,6 +20,8 @@ public class MathGame {
         this.scanner = scanner;
         currentPlayer = null; // will get assigned at start of game
         winner = null; // will get assigned when a Player wins
+        winner2 = null; // will get assigned when a Player wins
+        winner3 = null; // will get assigned when a Player wins
         gameOver = false;
     }
 
@@ -28,36 +32,39 @@ public class MathGame {
         return winner;
     }
 
+    public Player getWinner2() {
+        return winner2;
+    }
+
+    public Player getWinner3() {
+        return winner3;
+    }
+
     // plays a round of the math game
     public void playRound() {
-        Player deadPlayer = null;
         int incorrect = 0;
         chooseStartingPlayer();  // this helper method (shown below) sets currentPlayer to either player1 or player2
         while (!gameOver) {
-            if (deadPlayer != currentPlayer) {
-                printGameState();   // this helper method (shown below) prints the state of the Game
-                System.out.println("Current player: " + currentPlayer.getName());
-                boolean correct = askQuestion();  // this helper method (shown below) asks a question and returns T or F
-                if (correct) {
-                    System.out.println("Correct!");
-                    currentPlayer.incrementScore();  // this increments the currentPlayer's score
-                    swapPlayers();  // this helper method (shown below) sets currentPlayer to the other Player
+            printGameState();   // this helper method (shown below) prints the state of the Game
+            System.out.println("Current player: " + currentPlayer.getName());
+            boolean correct = askQuestion();  // this helper method (shown below) asks a question and returns T or F
+            if (correct) {
+                System.out.println("Correct!");
+                currentPlayer.incrementScore();  // this increments the currentPlayer's score
+                swapPlayers();  // this helper method (shown below) sets currentPlayer to the other Player
 
-                } else {
-                    incorrect += 1;
-                    System.out.println("INCORRECT!");
-                    deadPlayer = currentPlayer;
-                    swapPlayers();
-                    if (incorrect == 2) {
-                        gameOver = true;
-                        determineWinner();
-                    }
-                }
             } else {
+                incorrect += 1;
+                System.out.println("INCORRECT!");
                 swapPlayers();
+                if (incorrect == 3) {
+                    gameOver = true;
+                    determineWinner();
+                }
             }
         }
     }
+
 
     // prints the current scores of the two players
     private void printGameState() {
@@ -77,6 +84,8 @@ public class MathGame {
         gameOver = false;
         currentPlayer = null;
         winner = null;
+        winner2 = null;
+        winner3 = null;
     }
 
     // ------------ PRIVATE HELPER METHODS (internal use only) ------------
@@ -141,7 +150,36 @@ public class MathGame {
 
     // sets the winner when the game ends based on the player that missed the question
     private void determineWinner() {
-        if (player1.getScore() > player2.getScore() && player1.getScore() > player3.getScore()) {
+        if (player1.getScore() == 0 && player2.getScore() == 0 && player3.getScore() == 0) {
+            player1.resetStreak();
+            player2.resetStreak();
+            player3.resetStreak();
+        } else if (player1.getScore() == player2.getScore() && player1.getScore() == player3.getScore()) {
+                winner = player1;
+                winner2 = player2;
+                winner3 = player3;
+                player1.incrementStreak();
+                player2.incrementStreak();
+                player3.incrementStreak();
+        } else if (player1.getScore() == player2.getScore()) {
+            winner = player1;
+            winner2 = player2;
+            player1.incrementStreak();
+            player2.incrementStreak();
+            player3.resetStreak();
+        } else if (player1.getScore() == player3.getScore()) {
+            winner = player1;
+            winner2 = player3;
+            player1.incrementStreak();
+            player3.incrementStreak();
+            player2.resetStreak();
+        } else if (player3.getScore() == player2.getScore()) {
+            winner = player2;
+            winner2 = player3;
+            player2.incrementStreak();
+            player3.incrementStreak();
+            player1.resetStreak();
+        } else if (player1.getScore() > player2.getScore() && player1.getScore() > player3.getScore()) {
             winner = player1;
             player1.incrementStreak();
             player2.resetStreak();
@@ -151,11 +189,13 @@ public class MathGame {
             player2.incrementStreak();
             player1.resetStreak();
             player3.resetStreak();
-        } else {
+        } else if (player3.getScore() > player2.getScore()) {
             winner = player3;
             player3.incrementStreak();
             player1.resetStreak();
             player2.resetStreak();
+
+
         }
     }
 }
