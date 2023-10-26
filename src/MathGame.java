@@ -161,19 +161,19 @@ public class MathGame {
                 player1.incrementStreak();
                 player2.incrementStreak();
                 player3.incrementStreak();
-        } else if (player1.getScore() == player2.getScore()) {
+        } else if (player1.getScore() == player2.getScore() && player1.getScore() > player3.getScore()) {
             winner = player1;
             winner2 = player2;
             player1.incrementStreak();
             player2.incrementStreak();
             player3.resetStreak();
-        } else if (player1.getScore() == player3.getScore()) {
+        } else if (player1.getScore() == player3.getScore() && player1.getScore() > player2.getScore()) {
             winner = player1;
             winner2 = player3;
             player1.incrementStreak();
             player3.incrementStreak();
             player2.resetStreak();
-        } else if (player3.getScore() == player2.getScore()) {
+        } else if (player3.getScore() == player2.getScore() && player3.getScore() > player1.getScore()) {
             winner = player2;
             winner2 = player3;
             player2.incrementStreak();
