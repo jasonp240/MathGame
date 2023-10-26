@@ -52,7 +52,7 @@ public class MathGame {
                 System.out.println("Correct!");
                 currentPlayer.incrementScore();  // this increments the currentPlayer's score
                 swapPlayers();  // this helper method (shown below) sets currentPlayer to the other Player
-
+                incorrect = 0;
             } else {
                 incorrect += 1;
                 System.out.println("INCORRECT!");
